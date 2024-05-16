@@ -1,0 +1,17 @@
+# Gunakan image node.js versi 18 sebagai dasar
+FROM node:18
+
+# Set direktori kerja di dalam container
+WORKDIR /usr/src/app
+
+# Salin kode proyek Anda ke dalam container
+COPY . .
+
+# Instal dependensi npm
+RUN npm install
+
+# Port yang akan diekspose dari container
+EXPOSE 3000
+
+# Perintah untuk menjalankan aplikasi Anda ketika container dimulai
+CMD ["npm", "start"]
