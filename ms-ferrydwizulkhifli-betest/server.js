@@ -33,8 +33,8 @@ app.get("/", (_, res) => {
 connectDB();
 
 const port = process.env.PORT || 3001;
-// app.listen(port, () => {
-//   console.log(`Server is listening on PORT ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is listening on PORT ${port}`);
+});
 
 module.exports = { app };

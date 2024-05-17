@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  redis:
+    image: "redis/redis-stack-server"
+    container_name: "redis_ferrydwizulkhifli_betest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  mongodb:
+    image: "mongo"
+    container_name: "mongodb"
+    ports:
+      - "8080:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  nodejs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "testbe"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/db_ferrydwizulkhifli_betest
+      JWT_SECRET: NamanyaJugaSECRET
+      ACCES_TOKEN_SECRET: KamuNanyea
+      PORT: 3000
+      # MONGODB_URI=mongodb://localhost:8080/db_ferrydwizulkhifli_betest
+      HOST_REDIS: redis://@redis_ferrydwizulkhifli_betest:6379
+      # host.docker.internal
+    volumes:
+      - node-modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+volumes:
+  mongo-data:
+  redis-data:
+  node-modules:
